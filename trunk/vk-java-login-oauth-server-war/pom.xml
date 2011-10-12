@@ -12,7 +12,12 @@
    <dependencies>
       <dependency>
          <groupId>org.vk-java-login-oauth</groupId>
-         <artifactId>vk-java-login-oauth-auth</artifactId>
+         <artifactId>vk-java-login-oauth-valve</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.vk-java-login-oauth</groupId>
+         <artifactId>vk-java-login-oauth-servlet</artifactId>
          <version>${project.version}</version>
       </dependency>
       <dependency>
