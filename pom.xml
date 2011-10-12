@@ -510,7 +510,8 @@
       </plugins>
    </reporting>
    <modules>
-      <module>vk-java-login-oauth-auth</module>
+      <module>vk-java-login-oauth-valve</module>
+      <module>vk-java-login-oauth-servlet</module>
       <module>vk-java-login-oauth-server-war</module>
       <!-- module>vk-java-login-oauth-server-tomcat</module -->
    </modules>

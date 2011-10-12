@@ -80,7 +80,8 @@
                            flatten="true" overwrite="true">
                            <fileset dir="${project.build.directory}/war-unzipped/WEB-INF/lib"
                               casesensitive="yes">
-                              <include name="**/vk-java-login-oauth-auth-*.jar" />
+                              <include name="**/vk-java-login-oauth-valve-*.jar" />
+                              <include name="**/vk-java-login-oauth-servlet-*.jar" />
                               <include name="**/slf4j-*.jar" />
                               <include name="**/log4j-*.jar" />
                            </fileset>
