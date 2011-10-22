@@ -2,6 +2,7 @@
 # Build and run the vk-java-login-oauth tomcat.
 
 mvn clean install -Passembly
+#mvn clean install -Passembly -Dtomcat.distrib=/PATH/TO/TOMCAT/DISTRIBUTIVE
 
 rm -rf ./target/war-unzipped
 

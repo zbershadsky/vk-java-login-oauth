@@ -1,8 +1,3 @@
-<%@page import="org.slf4j.Logger"%>
-<%@page import="org.slf4j.LoggerFactory"%>
-<% final Logger LOG = LoggerFactory.getLogger("error.jsp");%>
-<%LOG.error("Error.");%>
-
 <html>
 <head>
 <title>Error</title>

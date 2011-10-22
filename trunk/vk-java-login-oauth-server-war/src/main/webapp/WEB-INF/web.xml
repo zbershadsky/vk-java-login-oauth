@@ -47,10 +47,10 @@
       </auth-constraint>
    </security-constraint>
 
-   <login-config>
-      <auth-method>BASIC</auth-method>
-      <realm-name>vk-realm</realm-name>
-   </login-config>
+<!--    <login-config> -->
+<!--       <auth-method>BASIC</auth-method> -->
+<!--       <realm-name>vk-realm</realm-name> -->
+<!--    </login-config> -->
 
    <security-role>
       <role-name>users</role-name>

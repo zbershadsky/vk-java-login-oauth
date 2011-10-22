@@ -30,15 +30,10 @@ public class VkFilter implements Filter
       ServletException
    {
       System.out.println(">>> alexey: VkFilter.doFilter 1 = " + 1);
-
       HttpServletRequest httpRequest = (HttpServletRequest)request;
       Principal principal = httpRequest.getUserPrincipal();
-      System.out.println(">>> alexey: VkServlet.service principal = " + principal);
-      if (principal != null)
-         System.out.println(">>> alexey: VkServlet.service principal.getName() = " + principal.getName());
-
+      System.out.println(">>> alexey: VkFilter.doFilter principal = " + principal);
       chain.doFilter(request, response);
-
    }
 
    @Override

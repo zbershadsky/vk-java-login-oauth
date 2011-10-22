@@ -5,7 +5,7 @@
    <artifactId>vk-java-login-oauth-parent</artifactId>
    <version>1.1-SNAPSHOT</version>
    <packaging>pom</packaging>
-   <name>vk-java-login-oauth</name>
+   <name>VK Java Login OAuth2 Parent  POM</name>
    <description>vk-java-login-oauth</description>
    <url>http://code.google.com/p/vk-java-login-oauth</url>
    <licenses>
