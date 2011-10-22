@@ -8,7 +8,7 @@
    </parent>
    <artifactId>vk-java-login-oauth-server-war</artifactId>
    <packaging>war</packaging>
-   <name>VK Java Login :: Server :: WAR</name>
+   <name>VK Java Login OAuth2 Server  WAR</name>
    <dependencies>
       <dependency>
          <groupId>org.vk-java-login-oauth</groupId>

@@ -16,6 +16,7 @@ mvn clean install
 
 
 mvn clean install -Passembly
+#mvn clean install -Passembly -Dtomcat.distrib=/PATH/TO/TOMCAT/DISTRIBUTIVE
 
 rm -rf ./target/war-unzipped
 

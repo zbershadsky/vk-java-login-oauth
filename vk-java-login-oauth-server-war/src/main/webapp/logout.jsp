@@ -1,8 +1,9 @@
-<%@page import="org.slf4j.Logger"%>
-<%@page import="org.slf4j.LoggerFactory"%>
-<% final Logger LOG = LoggerFactory.getLogger("logout.jsp");%>
-<%LOG.debug("Logout: Session invalidating and redirecting...");%>
-
+<%System.out.println(">>> logout.jsp");%>
+<%System.out.println("Logout: request.getContextPath() = " + request.getContextPath());%>
+<%System.out.println("Logout: Session invalidating and redirecting...");%>
 
 <%request.getSession().invalidate();%>
-<%response.sendRedirect(request.getContextPath() + "/#logout_vk");%>
+<%System.out.println("Logout: Session invalidated");%>
+
+<%response.sendRedirect(request.getContextPath());%>
+<%System.out.println("Logout: redirected.");%>
