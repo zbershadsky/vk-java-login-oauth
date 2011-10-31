@@ -50,8 +50,6 @@ public class VkAuthentificatorValve extends AuthenticatorBase
    @Override
    protected boolean authenticate(Request request, Response response, LoginConfig loginConfig) throws IOException
    {
-      System.out.println("\n\n>>>>>>>>>>>>>>>>>>>>> \n>>> alexey: VkAuthentificatorValve.authenticate 1 = " + 1);
-
       // at EVERY secure request
       
       HttpServletRequest httpRequest = (HttpServletRequest)request;
@@ -164,15 +162,15 @@ public class VkAuthentificatorValve extends AuthenticatorBase
 
          Map<String, String> params = parseJsonAsParams(responseAsString);
 
-         String username = params.get("user_id");
+         String vkUserId = params.get("user_id");
          //               String access_token = params.get("access_token");
          //               users.put(username, access_token);
 
-         if (username != null)
+         if (vkUserId != null)
          {
             // the user is ok
+            String username = "vk_" + vkUserId;
             principal = new GenericPrincipal(null, username, "N/P", roles);
-            System.out.println(">>> alexey: VkAuthentificatorValve.authenticate principal NEW = " + principal);
             register(request, response, principal, "", principal.getName(), "N/P");
             return true;
          }
