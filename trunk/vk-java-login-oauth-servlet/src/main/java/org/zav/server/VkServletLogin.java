@@ -21,23 +21,13 @@ public class VkServletLogin extends GenericServlet
    @Override
    public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException
    {
-      System.out.println("\n\n");
-      System.out.println(">>> alexey: VkServletLogin.service \n\n >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-      System.out.println(">>> alexey: VkServletLogin.service 1 = " + 1);
-
       HttpServletRequest httpRequest = (HttpServletRequest)req;
 
-      Principal principal = httpRequest.getUserPrincipal();
-      System.out.println("DEBUG:  principal = " + principal);
-
       String myuriredirect = httpRequest.getParameter("myuriredirect");
-      System.out.println(">>> alexey: VkServletLogin.service myuriredirect = " + myuriredirect);
 
       if (myuriredirect!=null && !"".equalsIgnoreCase(myuriredirect)){
-         System.out.println(">>> alexey: VkServletLogin.service Redirecting... myuriredirect :) = ");
          ((HttpServletResponse)res).sendRedirect(myuriredirect);
       } else {
-         System.out.println(">>> alexey: VkServletLogin.service Redirecting... main :( = ");
          ((HttpServletResponse)res).sendRedirect("/vk/index.jsp");
       }
    }

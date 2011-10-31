@@ -9,6 +9,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -30,9 +31,10 @@ public class VkFilter implements Filter
       ServletException
    {
       System.out.println(">>> alexey: VkFilter.doFilter 1 = " + 1);
-      HttpServletRequest httpRequest = (HttpServletRequest)request;
-      Principal principal = httpRequest.getUserPrincipal();
+      HttpServletRequest httpReq = (HttpServletRequest)request;
+      Principal principal = httpReq.getUserPrincipal();
       System.out.println(">>> alexey: VkFilter.doFilter principal = " + principal);
+      
       chain.doFilter(request, response);
    }
 

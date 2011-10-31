@@ -52,42 +52,35 @@ public class VkAuthentificatorValve extends AuthenticatorBase
    {
       System.out.println("\n\n>>>>>>>>>>>>>>>>>>>>> \n>>> alexey: VkAuthentificatorValve.authenticate 1 = " + 1);
 
+      // at EVERY secure request
+      
       HttpServletRequest httpRequest = (HttpServletRequest)request;
       
-      String cookie = httpRequest.getHeader("cookie");
-      System.out.println(">>> alexey: VkAuthentificatorValve.authenticate cookie = " + cookie);
-      
-
       Principal principal = httpRequest.getUserPrincipal();
-      System.out.println(">>> alexey: VkAuthentificatorValve.authenticate principal = " + principal);
 
       // if ALL OK
       if (principal != null && principal.getName() != null)
       {
-         // TODO
-         //         String access_token = users.get(principal.getName());
-         //         System.out.println(">>> alexey: VkAuthentificatorValve.authenticate access_token = " + access_token);
-         //         httpRequest.getSession(true).setAttribute("access_token", access_token);
-         // to remove token in the target servlet in each request iteration
          return true;
       }
+      
+      // there is NO PRINCIPAL
 
       // the authentication
       String codeParameter = httpRequest.getParameter("code");
-      System.out.println(">>> alexey: VkAuthentificatorValve.authenticate codeParameter = " + codeParameter);
       if (codeParameter == null)
       {
-
-         // CHECK THE PARAMETER FROM THE LOGIN FORM
+         // if don't come from VK (with code param)
+         
+         // check the parameter from the login page
          String login = httpRequest.getParameter("mk_login");
-         System.out.println(">>> alexey: VkAuthentificatorValve.authenticate login = " + login);
          if (login == null)
          {
+            // will not go to the VK, should display the LOGIN page
+            
             String currentUri = httpRequest.getRequestURL().toString();
-            System.out.println(">>> alexey: VkAuthentificatorValve.authenticate httpRequest.getRequestURI() = "
-               + httpRequest.getRequestURI());
             if ("/vk/private/login/".equalsIgnoreCase(httpRequest.getRequestURI())) {
-               // CANCELLED LOGIN
+               // IF CANCELLED LOGIN
                response.sendRedirect("/vk/index.jsp");
             } else {
                // USER REDIRECTS TO LOGIN PAGE
@@ -98,11 +91,7 @@ public class VkAuthentificatorValve extends AuthenticatorBase
          }
          else
          {
-
-            // need to send to the VK to auth
-
-            System.out.println(">>> alexey: VkAuthentificatorValve.authenticate httpRequest.getQueryString() = "
-               + httpRequest.getQueryString());
+            // param is ok, let's login to VK
 
             String currentUri = httpRequest.getRequestURL().toString();
 
@@ -124,27 +113,18 @@ public class VkAuthentificatorValve extends AuthenticatorBase
                currentUri += query;
             }
 
-            System.out.println(">>> alexey: VkAuthentificatorValve.authenticate currentUri = " + currentUri);
-
             String encodedCurrentUri = URLEncoder.encode(currentUri, "UTF-8");
-            System.out.println(">>> alexey: VkAuthentificatorValve.authenticate encodedCurrentUri = "
-               + encodedCurrentUri);
 
             String myuriredirect = httpRequest.getParameter("myuriredirect");
-            System.out.println(">>> alexey: VkAuthentificatorValve.authenticate myuriredirect = " + myuriredirect);
 
             if (myuriredirect != null)
             {
                // if cancelled login and will login again
                encodedCurrentUri = URLEncoder.encode(myuriredirect, "UTF-8");
-               System.out.println(">>> alexey: VkAuthentificatorValve.authenticate !!! encodedCurrentUri = "
-                  + encodedCurrentUri);
             }
 
             String redirectUri =
                "moyakarta.dyndns.org/vk/private/login/%3F" + "myuriredirect" + "%3D" + encodedCurrentUri;
-
-            System.out.println(">>> alexey: VkAuthentificatorValve.authenticate redirectUri = " + redirectUri);
 
             String uri = "https://api.vkontakte.ru/oauth/authorize?" + //
                "client_id=" + APP_ID + //
@@ -152,21 +132,19 @@ public class VkAuthentificatorValve extends AuthenticatorBase
                "&redirect_uri=" + redirectUri + // 
                "&display=" + DISPLAY_TYPE + //
                "&response_type=code";
-            System.out.println(">>> alexey: VkAuthentificatorValve.authenticate REDIRECTING ... = ");
             response.sendRedirect(uri);
             return false;
          }
       }
       else
       {
-         // come from VK with 'code' parameter
+         // returned from VK with 'code' parameter
          //         principal = (GenericPrincipal)VkAuthentificatorValve.authenticate(httpRequest, APP_ID, APP_SECRET);
 
          String accessTokenUri = "https://api.vkontakte.ru/oauth/access_token" // 
             + "?" + "client_id=" + APP_ID //
             + "&" + "client_secret=" + APP_SECRET // 
             + "&" + "code=" + codeParameter;
-         System.out.println(">>> alexey: VkAuthentificatorValve.authenticate accessTokenUri = " + accessTokenUri);
 
          String responseAsString = null;
          try
@@ -178,8 +156,6 @@ public class VkAuthentificatorValve extends AuthenticatorBase
             conn.setRequestProperty("Content-type", "application/json");
             InputStream inputStream = conn.getInputStream();
             responseAsString = convertStreamToString(inputStream);
-            System.out
-               .println(">>> alexey: VkAuthentificatorValve.authenticate responseAsString = " + responseAsString);
          }
          catch (IOException e)
          {
@@ -191,20 +167,18 @@ public class VkAuthentificatorValve extends AuthenticatorBase
          String username = params.get("user_id");
          //               String access_token = params.get("access_token");
          //               users.put(username, access_token);
-         System.out.println(">>> alexey: VkAuthentificatorValve.authenticate username = " + username);
 
          if (username != null)
          {
             // the user is ok
             principal = new GenericPrincipal(null, username, "N/P", roles);
-            System.out.println(">>> alexey: VkAuthentificatorValve.authenticate principal = " + principal);
-
+            System.out.println(">>> alexey: VkAuthentificatorValve.authenticate principal NEW = " + principal);
             register(request, response, principal, "", principal.getName(), "N/P");
             return true;
          }
          else
          {
-            System.out.println(">>> alexey: VkAuthentificatorValve.authenticate ERROR = ");
+            // the user is fail
             String page = "/vk/index.jsp";
             response.sendRedirect(page);
             return false;
@@ -213,28 +187,6 @@ public class VkAuthentificatorValve extends AuthenticatorBase
       }
 
    }
-
-   //   protected void forwardToErrorPage(Request request, Response response, LoginConfig config)
-   //   {
-   //      System.out.println(">>> alexey:  ++++++++++++ !!! VkAuthentificatorValve.forwardToErrorPage");
-   //      String errorPage = "/error.jsp"; 
-   //      RequestDispatcher disp = context.getServletContext().getRequestDispatcher(errorPage);
-   //      try
-   //      {
-   //         disp.forward(request.getRequest(), response.getResponse());
-   //      }
-   //      catch (Throwable t)
-   //      {
-   //         LOG.warn("Unexpected error forwarding to error page", t);
-   //      }
-   //   }
-
-   //   protected void sendRedirectToIndexPage(Request request, Response response, LoginConfig config) throws IOException
-   //   {
-   //      System.out.println(">>> alexey:  ++++++++++++ !!! VkAuthentificatorValve.sendRedirectToErrorPage");
-   //      String page = "/vk/index.jsp";
-   //      response.sendRedirect(page);
-   //   }
 
    private static Map<String, String> parseJsonAsParams(String responseAsString)
    {
