@@ -1,3 +1,4 @@
+<%System.out.println(">>> error.jsp: begin");%>
 <html>
 <head>
 <title>Error</title>

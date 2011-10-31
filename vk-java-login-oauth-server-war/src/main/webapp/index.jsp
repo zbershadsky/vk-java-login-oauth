@@ -1,4 +1,5 @@
-<%System.out.println("index.jsp: >>> begin");%>
+<%System.out.println(">>> index.jsp: begin");%>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head> 
       <meta http-equiv="content-type" content="text/html; charset=windows-1251" /> 
@@ -40,9 +41,8 @@ PUBLIC PAGE <a href="/vk/logout.jsp">logout</a><br/>
 <br/>
 <a href="http://moyakarta.dyndns.org/vk/private/ok">private</a><br/>
 <br/>
-<a href="http://api.vkontakte.ru/oauth/authorize?client_id=2635070&scope=friends,video,offline&display=page&redirect_uri=<%= request.getRequestURL().toString().substring(request.getRequestURL().indexOf("/")+2) %>&response_type=token">link to client auth</a><br/>
+<a href="https://api.vkontakte.ru/oauth/authorize?client_id=2635070&scope=friends,video,offline&display=page&redirect_uri=<%= request.getRequestURL().toString().substring(request.getRequestURL().indexOf("/")+2) %>&response_type=token">link to client auth</a><br/>
 <input id="gpsbutton" type="button" value="ajax send" name="buttongpsmarker" onClick="ajaxSendToVk()">
 <br/>
-<%-- <%=((javax.servlet.http.HttpServletRequest)request).getHeader("cookie") %> --%>
   </body> 
 </html>

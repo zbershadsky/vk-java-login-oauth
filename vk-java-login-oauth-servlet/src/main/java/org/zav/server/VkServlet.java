@@ -1,7 +1,6 @@
 package org.zav.server;
 
 import java.io.IOException;
-import java.security.Principal;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
@@ -22,17 +21,9 @@ public class VkServlet extends GenericServlet
    @Override
    public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException
    {
-      System.out.println("DEBUG: \n\n >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-      System.out.println("DEBUG: Entering the method");
-      System.out.println(">>> alexey: VkServlet.service 1 = " + 1);
-
       HttpServletRequest httpRequest = (HttpServletRequest)req;
 
-      Principal principal = httpRequest.getUserPrincipal();
-      System.out.println("DEBUG:  principal = " + principal);
-
       httpRequest.getRequestDispatcher("/index_private.jsp").include(req, res);
-
    }
 
 }
