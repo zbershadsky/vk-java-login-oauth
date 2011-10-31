@@ -54,10 +54,12 @@ LOGIN PAGE <a href="/vk/index.jsp">main</a><br/>
 <br/>
 
 <div id="vk_auth"></div>
+
 <script type="text/javascript">
+
 VK.Widgets.Auth("vk_auth", {width: "200px", authUrl: '<%=request.getParameter("url")%>?mk_login=vk'});
 
-function resizeVkAuth() {
+function realResizeVkAuth() {
 	if ($('#vk_auth').height() > 70) {
 		// 105 -> 64
       $('#vk_auth iframe').height(64);
@@ -73,68 +75,72 @@ function resizeVkAuth() {
 }
 
 function preResizeVkAuth() {
-      if ($('#vk_auth').height() == 105 || $('#vk_auth').height() == 63) {
-   	   resizeVkAuth();
-      }
+   if ($('#vk_auth').height() == 105 || $('#vk_auth').height() == 63) {
+ 	   realResizeVkAuth();
+   }
 }
 
-setTimeout(function(){
-    preResizeVkAuth();
-}, 750 );
+function resizeVkAuth() {
+   setTimeout(function(){
+       preResizeVkAuth();
+   }, 750 );
+   
+   setTimeout(function(){
+   	   preResizeVkAuth();
+   }, 1000 );
+   
+   setTimeout(function(){
+       preResizeVkAuth();
+   }, 1500 );
+   
+   setTimeout(function(){
+       preResizeVkAuth();
+   }, 2000 );
+   
+   setTimeout(function(){
+       preResizeVkAuth();
+   }, 3000 );
+   
+   setTimeout(function(){
+       preResizeVkAuth();
+   }, 4000 );
+   
+   setTimeout(function(){
+       preResizeVkAuth();
+   }, 5000 );
+   
+   setTimeout(function(){
+       preResizeVkAuth();
+   }, 6000 );
+   
+   setTimeout(function(){
+       preResizeVkAuth();
+   }, 7000 );
+   
+   setTimeout(function(){
+       if ($('#vk_auth').height() == 80) {
+             // 80 -> 64
+             $('#vk_auth iframe').height(64);
+             $('#vk_auth').height(64);
+             $('#logoutVkLink').show();
+          }
+   }, 8000 );
+   
+   setTimeout(function(){
+       preResizeVkAuth();
+   }, 9000 );
+   
+   setTimeout(function(){
+   	   if ($('#vk_auth').height() == 80) {
+   		      // 80 -> 64
+   		      $('#vk_auth iframe').height(64);
+   		      $('#vk_auth').height(64);
+   		      $('#logoutVkLink').show();
+   		   }
+   }, 10000 );
+}
 
-setTimeout(function(){
-	   preResizeVkAuth();
-}, 1000 );
-
-setTimeout(function(){
-    preResizeVkAuth();
-}, 1500 );
-
-setTimeout(function(){
-    preResizeVkAuth();
-}, 2000 );
-
-setTimeout(function(){
-    preResizeVkAuth();
-}, 3000 );
-
-setTimeout(function(){
-    preResizeVkAuth();
-}, 4000 );
-
-setTimeout(function(){
-    preResizeVkAuth();
-}, 5000 );
-
-setTimeout(function(){
-    preResizeVkAuth();
-}, 6000 );
-
-setTimeout(function(){
-    preResizeVkAuth();
-}, 7000 );
-
-setTimeout(function(){
-    if ($('#vk_auth').height() == 80) {
-          // 80 -> 64
-          $('#vk_auth iframe').height(64);
-          $('#vk_auth').height(64);
-          $('#logoutVkLink').show();
-       }
-}, 8000 );
-
-setTimeout(function(){
-    preResizeVkAuth();
-}, 9000 );
-
-setTimeout(function(){
-	   if ($('#vk_auth').height() == 80) {
-		      // 80 -> 64
-		      $('#vk_auth iframe').height(64);
-		      $('#vk_auth').height(64);
-		      $('#logoutVkLink').show();
-		   }
-}, 10000 );
+resizeVkAuth();
 
 </script>
 
