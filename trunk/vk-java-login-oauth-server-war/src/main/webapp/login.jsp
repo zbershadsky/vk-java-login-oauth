@@ -32,8 +32,9 @@
           function ajaxLogout() {
         	    $('#vk_auth').hide();
         	    $('#vk_auth iframe').hide();
-        	    $('#loginVkLink').hide();
         	    $('#mk_vk_auth_logout').hide();
+        	    
+        	    $('#loginVkLink').hide();
              $.ajax({
                  url: 'https://m.vkontakte.ru/logout',
                  dataType: 'jsonp',
@@ -49,32 +50,47 @@
           
           // RESIZE VK AUTH
           
+          function showLogout() {
+             $('#vk_auth').height(64);
+             $('#vk_auth iframe').height(64);
+        	    $('#mk_vk_auth_logout').show();
+        	    $('#vk_auth').show();
+          }
+          
          function realResizeVkAuth() {
-            if ($('#vk_auth').height() > 70) {
+            if ($('#vk_auth iframe').height() > 70) {
                // 105 -> 64
-               $('#vk_auth iframe').height(64);
-               $('#vk_auth').height(64);
-               $('#mk_vk_auth_logout').show();
+               // logined
+               showLogout();
             } else {
                // 63 -> 22
-               $('#vk_auth iframe').hide();
-               $('#vk_auth').hide();
+               // logouted
+            }
+         }
+          
+         function realResizeVkAuthMobile() {
+            if ($('#vk_auth iframe').height() == 80) {
+                // 80 -> 64
+                showLogout();
             }
          }
          
          function preResizeVkAuth() {
-            if ($('#vk_auth').height() == 105 || $('#vk_auth').height() == 63) {
+            if ($('#vk_auth iframe').height() >= 105 || $('#vk_auth iframe').height() == 63) {
+            	// || $('#vk_auth iframe').height() == 185 || $('#vk_auth iframe').height() == 147) {
                realResizeVkAuth();
             }
          }
+         
+         // TIMEOUT ON RESIZE
          
          function resizeVkAuth() {
             setTimeout(function(){
                 preResizeVkAuth();
             }, 750 );
-            
+        	   
             setTimeout(function(){
-                  preResizeVkAuth();
+                preResizeVkAuth();
             }, 1000 );
             
             setTimeout(function(){
@@ -90,7 +106,7 @@
             }, 3000 );
             
             setTimeout(function(){
-                preResizeVkAuth();
+                realResizeVkAuthMobile();
             }, 4000 );
             
             setTimeout(function(){
@@ -106,12 +122,7 @@
             }, 7000 );
             
             setTimeout(function(){
-                if ($('#vk_auth').height() == 80) {
-                      // 80 -> 64
-                      $('#vk_auth iframe').height(64);
-                      $('#vk_auth').height(64);
-                      $('#mk_vk_auth_logout').show();
-                   }
+            	 realResizeVkAuthMobile();
             }, 8000 );
             
             setTimeout(function(){
@@ -119,12 +130,7 @@
             }, 9000 );
             
             setTimeout(function(){
-                  if ($('#vk_auth').height() == 80) {
-                        // 80 -> 64
-                        $('#vk_auth iframe').height(64);
-                        $('#vk_auth').height(64);
-                        $('#mk_vk_auth_logout').show();
-                     }
+            	 realResizeVkAuthMobile();
             }, 10000 );
          }
 
@@ -146,13 +152,14 @@ LOGIN PAGE <a href="/vk/index.jsp">main</a><br/>
    </div>
 </div>
 
-<div id="vk_auth"></div>
+<div id="vk_auth" style="display: none;"></div>
 
 <script type="text/javascript">
    VK.Widgets.Auth("vk_auth", {width: "200px", authUrl: '<%=request.getParameter("url")%>?mk_login=vk'});
    resizeVkAuth();
 </script>
 
+<!-- LOGOUT -->
 <div id="mk_vk_auth_logout" style="width: 200px; display: none;">
    <div id="vk_auth_mk_logout" style="font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;font-size: 11px;width: 200px; background-image: none; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial; height: 39px; background-position: initial initial; background-repeat: initial initial; ">
       <div style="padding-top: 5px; padding: 3px 3px 6px 3px;background: white;border: 1px solid #CCC;">
